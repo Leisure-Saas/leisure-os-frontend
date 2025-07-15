@@ -1,7 +1,8 @@
+// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export", // <-- Tambahkan baris ini
+  // Biarkan kosong, ini akan mengaktifkan mode SSR standar
 };
 
 export default nextConfig;
