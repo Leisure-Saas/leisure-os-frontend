@@ -27,7 +27,7 @@ type ApiResponse = {
 
 async function getPropertyDetails(id: string): Promise<PropertyDetails | null> {
   try {
-    const res = await fetch(`https://leisure-os-backend.onrender.com/api/properties/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/properties/${id}`);
     if (!res.ok) return null;
     
     const responseData: ApiResponse = await res.json();
