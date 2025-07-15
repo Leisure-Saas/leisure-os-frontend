@@ -1,44 +1,35 @@
 // src/app/properties/[id]/page.tsx
 
-// Definisikan tipe untuk properti detail
+// Tipe data untuk properti detail (tetap sama)
 type PropertyDetails = {
-  id: string;
-  name: string;
-  type: string;
-  location: string;
-  description: string | null;
-  bedrooms: number;
-  bathrooms: number;
-  maxGuests: number;
-  basePricePerNight: number;
+  id: string; name: string; type: string; location: string;
+  description: string | null; bedrooms: number; bathrooms: number;
+  maxGuests: number; basePricePerNight: number;
 };
 
-// ▼▼▼ BAGIAN YANG DIPERBAIKI ADA DI SINI ▼▼▼
-// Membuat tipe data khusus untuk props halaman ini
+// Tipe data untuk props halaman (tetap sama)
 type Props = {
-  params: {
-    id: string;
-  };
+  params: { id: string; };
 };
 
+// Fungsi untuk mengambil data (tetap sama)
 async function getPropertyDetails(id: string): Promise<PropertyDetails | null> {
   try {
     const res = await fetch(`https://leisure-os-backend.onrender.com/api/properties/${id}`);
     if (!res.ok) return null;
-
-    // Sesuaikan dengan struktur respons dari backend kita
     const responseData = await res.json();
     return responseData.data.property;
-
   } catch (error) {
     console.error(error);
     return null;
   }
 }
 
-// Menggunakan tipe 'Props' yang baru di komponen
-export default async function PropertyDetailPage({ params }: Props) {
-  const property = await getPropertyDetails(params.id);
+// ▼▼▼ PERUBAHAN UTAMA ADA DI SINI ▼▼▼
+// Kita akan menerima 'props' sebagai satu objek utuh, lalu mengambil 'id' di dalamnya.
+export default async function PropertyDetailPage(props: Props) {
+  const { id } = props.params; // Mengambil 'id' dari 'props.params'
+  const property = await getPropertyDetails(id); // Menggunakan 'id' yang sudah diambil
 
   if (!property) {
     return <div className="text-center py-20">Properti tidak ditemukan.</div>;
